@@ -19,6 +19,7 @@ import { migrateTypebot } from '@typebot.io/lib/migrations/migrateTypebot'
 const omittedProps = {
   id: true,
   whatsAppCredentialsId: true,
+  riskLevel: true,
   isClosed: true,
   isArchived: true,
   createdAt: true,
@@ -34,14 +35,24 @@ const omittedProps = {
 const importingTypebotSchema = z.preprocess(
   preprocessTypebot,
   z.discriminatedUnion('version', [
-    typebotV5Schema._def.schema.omit(omittedProps).extend({
-      resultsTablePreferences: resultsTablePreferencesSchema.nullish(),
-      selectedThemeTemplateId: z.string().nullish(),
-    }),
-    typebotV6Schema.omit(omittedProps).extend({
-      resultsTablePreferences: resultsTablePreferencesSchema.nullish(),
-      selectedThemeTemplateId: z.string().nullish(),
-    }),
+    typebotV6Schema
+      .omit(omittedProps)
+      .extend({
+        resultsTablePreferences: resultsTablePreferencesSchema.nullish(),
+        selectedThemeTemplateId: z.string().nullish(),
+      })
+      .openapi({
+        title: 'Typebot V6',
+      }),
+    typebotV5Schema._def.schema
+      .omit(omittedProps)
+      .extend({
+        resultsTablePreferences: resultsTablePreferencesSchema.nullish(),
+        selectedThemeTemplateId: z.string().nullish(),
+      })
+      .openapi({
+        title: 'Typebot V5',
+      }),
   ])
 )
 
@@ -64,6 +75,7 @@ const migrateImportingTypebot = (
     whatsAppCredentialsId: null,
     publicId: null,
     folderId: null,
+    riskLevel: null,
   } satisfies Typebot
   return migrateTypebot(fullTypebot)
 }
@@ -80,7 +92,11 @@ export const importTypebot = authenticatedProcedure
   })
   .input(
     z.object({
-      workspaceId: z.string(),
+      workspaceId: z
+        .string()
+        .describe(
+          '[Where to find my workspace ID?](../how-to#how-to-find-my-workspaceid)'
+        ),
       typebot: importingTypebotSchema,
     })
   )
