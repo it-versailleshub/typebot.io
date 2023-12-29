@@ -1,17 +1,11 @@
 version: "3.8"
-services: 
-   
-  load-balancer:
-    image: nginx:latest
+services:
 
-      #     ports:
-      #       - 80:80
-      #       - 443:443
+   load-balancer:
+    image: nginx:latest
 
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
       - ./crt:/crt
 
     network_mode: "host"
-
-

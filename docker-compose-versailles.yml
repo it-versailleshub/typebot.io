@@ -19,8 +19,8 @@ services:
   typebot-builder:
     image: typebot-builder:latest
     build:
-      context: ./typebot.io
-      args: 
+      context: .
+      args:
         - SCOPE=builder
     restart: always
     depends_on:
@@ -34,8 +34,8 @@ services:
   typebot-viewer:
     image: typebot-viewer:latest
     build:
-      context: ./typebot.io
-      args: 
+      context: .
+      args:
         - SCOPE=viewer
     restart: always
     ports:
