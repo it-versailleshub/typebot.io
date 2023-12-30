@@ -253,7 +253,7 @@ const BotContent = (props: BotContentProps) => {
           props.initialChatReply.typebot.settings.general?.isBrandingEnabled
         }
       >
-        <LiteBadge botContainer={botContainer} />
+        {/* <LiteBadge botContainer={botContainer} /> */}
       </Show>
     </div>
   )

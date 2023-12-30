@@ -112,7 +112,7 @@ export const TypebotViewer = ({
                 startGroupId={startGroupId}
               />
             </div>
-            {false && <LiteBadge />}
+            {/* {false && <LiteBadge />} */}
           </div>
         </AnswersProvider>
       </TypebotProvider>

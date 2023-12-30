@@ -1,0 +1,14 @@
+[
+	{
+		"origin": [
+			"https://builder.versaillesclub.com", "*"
+		],
+		"method": [
+			"GET", "POST"
+		],
+		"responseHeader": [
+			"Content-Type"
+		],
+		"maxAgeSeconds": 3600
+	}
+]
